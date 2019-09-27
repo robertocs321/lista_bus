@@ -22,9 +22,12 @@ def listar (request):
 
 def tirar(request, id):
 	aux2=id
-	aux = Aluno.objects.get(id=id)
-	aux.delete()
-	return redirect('menu')
+	try:
+		aux = Aluno.objects.get(id=id)
+		aux.delete()
+		return redirect('menu')
+	except :
+		return redirect('menu')
 
 def editar(request, id):
 	aux = Aluno.objects.get(id=id)
@@ -46,10 +49,15 @@ def cadastrar(request):
 		#    return render(request, 'aluno/login.html', {'alerta3': 'Erro'})
 		data_atual = date.today()
 		data_e_hora_atuais = datetime.now()
-		hora = data_e_hora_atuais.strftime('%H')
+		hora = data_e_hora_atuais.strftime('%H')#o %H retorna apenas a hora
 		hora1=int(hora)
-		if 11 < hora1 < 20:
-			return redirect('menu')
+		if 11 <= hora1 < 20:
+			lista0 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.VOLTA)
+			lista1 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.IDA)
+
+			lista2 = Aluno.objects.all().filter(situacao=Aluno.CARONA,acao=Aluno.VOLTA)
+			lista3 = Aluno.objects.all().filter(situacao=Aluno.CARONA,acao=Aluno.IDA)
+			return render(request, 'main.html',{'alerta':'ok', "cadastrados": lista0,'caronas': lista2, 'cadastradosi':lista1, 'caronasi':lista3})
 			
 
 		nome = request.POST['nome']
