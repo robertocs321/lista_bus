@@ -7,6 +7,13 @@ from django.db.models import Count
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 # Create your views here.
+
+def index(request):
+    r = requests.get('http://httpbin.org/status/418')
+    print(r.text)
+    return HttpResponse('<pre>' + r.text + '</pre>')
+
+
 def listar (request):
 	lista0 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.VOLTA)
 	lista1 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.IDA)
