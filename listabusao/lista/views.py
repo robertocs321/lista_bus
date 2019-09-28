@@ -2,9 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Aluno
 from .forms import AlunoForm
 from datetime import date
-from django.contrib.auth.models import User
-from django.contrib.auth import login 
-from django.contrib.auth import authenticate, logout
 from django.utils import timezone
 from django.db.models import Count
 from django.http import HttpResponse
@@ -28,6 +25,26 @@ def tirar(request, id):
 		return redirect('menu')
 	except :
 		return redirect('menu')
+
+
+def novalista(request):
+	data_e_hora_atuais = datetime.now()
+	hora = data_e_hora_atuais.strftime('%H')#o %H retorna apenas a hora
+	hora1=int(hora)
+	try:
+		if hora1 == 19:	
+			aux = Aluno.objects.all()
+			aux.delete()
+			return redirect('menu')
+	except :
+		return redirect('menu')
+	lista0 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.VOLTA)
+	lista1 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.IDA)
+
+	lista2 = Aluno.objects.all().filter(situacao=Aluno.CARONA,acao=Aluno.VOLTA)
+	lista3 = Aluno.objects.all().filter(situacao=Aluno.CARONA,acao=Aluno.IDA)
+	return render(request, 'main.html',{'alerta2':'ok', "cadastrados": lista0,'caronas': lista2, 'cadastradosi':lista1, 'caronasi':lista3})
+	
 
 def editar(request, id):
 	aux = Aluno.objects.get(id=id)
