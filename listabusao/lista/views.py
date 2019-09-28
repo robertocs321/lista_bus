@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.db.models import Count
 from django.http import HttpResponse
 from datetime import datetime, timedelta
+import os
 # Create your views here.
 
 def index(request):
