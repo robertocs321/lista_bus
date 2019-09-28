@@ -59,8 +59,8 @@
               </div>
               <div class="modal-body" >
 
-                <p><b>01.</b> O sistema não permite que o usuário coloque seu nome na lista entre 11 e 20h.</p>
-                <p><b>02.</b> O aluno que não for usar o ônibus deve apagar seu nome da lista (na tabela tem uma lixeira no canto direito).</p>
+                <p><b>01.</b> O sistema não permite que o usuário coloque seu nome na lista, como <b>cadastrado</b>,  entre 11 e 20h.</p>
+                <p><b>02.</b> O aluno que colocou o nome na lista e não for usar o ônibus deve apagar seu nome da lista (na tabela tem uma lixeira no canto direito).</p>
                 <p><b>03.</b> O sistema mostra dois conjuntos de listas, a primeira é a lista de quem irá voltar no ônibus e a outra, que está abaixo, é de quem vai no ônibus. Se você escolher a opção "Ida e volta" o seu nome será colocado nas duas listas.</p>
                 <p><b>04.</b> A lista do dia anterior deve ser apagada manualmente pelos usuários entre 19:00 e 19:59.
                 </p>
@@ -82,7 +82,7 @@
       <div class="col-md-12">
         {% if alerta %}
           <div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i>
-            Esse horário não é permitido para colocar o nome na lista! Horário permitido: 20:00 do dia anterior - 10:59 do mesmo dia.
+            Devido ao horário, seu nome foi adicionado à lista como carona.
           </div>
         {% endif %}
       </div>

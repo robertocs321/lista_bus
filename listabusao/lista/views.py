@@ -76,19 +76,31 @@ def cadastrar(request):
 		data_e_hora_atuais = datetime.now()
 		hora = data_e_hora_atuais.strftime('%H')#o %H retorna apenas a hora
 		hora1=int(hora)
+		
+		nome = request.POST['nome']
+		acao = request.POST['acao']
+		instituicao = request.POST['instituicao']
+		situacao = request.POST['situacao']
+		
 		if 11 <= hora1 < 20:
 			lista0 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.VOLTA)
 			lista1 = Aluno.objects.all().filter(situacao=Aluno.CADASTRADO, acao=Aluno.IDA)
 
 			lista2 = Aluno.objects.all().filter(situacao=Aluno.CARONA,acao=Aluno.VOLTA)
 			lista3 = Aluno.objects.all().filter(situacao=Aluno.CARONA,acao=Aluno.IDA)
-			return render(request, 'main.html',{'alerta':'ok', "cadastrados": lista0,'caronas': lista2, 'cadastradosi':lista1, 'caronasi':lista3})
-			
+			if acao=='2':
+				Aluno.objects.create(nome=nome, acao='1', instituicao=instituicao, situacao='2')
+				Aluno.objects.create(nome=nome, acao='3', instituicao=instituicao, situacao='2')
+				if situacao=='1':
+					return render(request, 'main.html',{'alerta':'ok', "cadastrados": lista0,'caronas': lista2, 'cadastradosi':lista1, 'caronasi':lista3})
+				return redirect('menu')
 
-		nome = request.POST['nome']
-		acao = request.POST['acao']
-		instituicao = request.POST['instituicao']
-		situacao = request.POST['situacao']
+			Aluno.objects.create(nome=nome, acao=acao, instituicao=instituicao, situacao='2')
+			if situacao=='1':
+				return render(request, 'main.html',{'alerta':'ok', "cadastrados": lista0,'caronas': lista2, 'cadastradosi':lista1, 'caronasi':lista3})
+			
+			return redirect('menu')
+
 
 		if acao=='2':
 			Aluno.objects.create(nome=nome, acao='1', instituicao=instituicao, situacao=situacao)
